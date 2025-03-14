@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    body
+    {
+        background-color: black;
+        color: white;
+        margin : 0;
+    }
+
+    header
+    {
+        background-color: red;
+        text-align: center;
+        font-weight : bold;
+
+        height : 10%;
+        padding : 0;
+
+        display: flex;
+        justify-content: space-around;
+        align-items: flex-start;
+    }
+
+    header div span
+    {
+        font-size : 36px;
+    }
+
+    a
+    {
+        text-decoration: none;
+    }
+
+    a span {
+        background-color: red;
+        color: white;
+        padding: 8px;
+        border-radius: 5px;
+        font-weight: bold;
+        text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+    <header th:fragment="header">
+        <a th:href="@{/searchResult}">
+            <span>콘텐츠 검색</span>
+        </a>
+        <div>
+        <a th:href="@{/recommend}">
+            <span>무작위 콘텐츠 추천</span>
+        </a>
+        <br>
+        <p>NETFLIX</p>
+        <br>
+        </div>
+        <a th:href="@{/ranking}">
+            <span>순위 보기</span>
+        </a>
+    </header>
+</body>
+</html>

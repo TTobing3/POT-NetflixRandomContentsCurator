@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Netflix Search Result</title>
+    <style>
+        header
+        {
+            background-color: red;
+            text-align: center;
+            font-weight : bold;
+
+            height : 10%;
+            padding : 0;
+
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-start;
+        }
+
+       header div p
+       {
+           margin: 0px;
+           font-size: 36px;
+       }
+
+       a span
+       {
+           background-color: red;
+           color: white;
+           padding: 8px;
+           border-radius: 5px;
+           font-weight: bold;
+           text-decoration: none;
+       }
+       body
+       {
+           font-family: Arial, sans-serif;
+           background-color: black;
+           color: white;
+           text-align: center;
+           padding: 0;
+           margin: 0;
+       }
+
+       form
+       {
+           margin: 20px auto;
+           display: flex;
+           justify-content: center;
+           gap: 10px;
+       }
+
+       input, select, button
+       {
+           padding: 10px;
+           font-size: 16px;
+           border: none;
+           border-radius: 5px;
+       }
+
+       button
+       {
+           background-color: red;
+           color: white;
+           cursor: pointer;
+       }
+
+       table
+       {
+           margin: 20px auto;
+           width: 80%;
+           border-collapse: collapse;
+       }
+
+       th, td
+       {
+           border: 1px solid white;
+           padding: 10px;
+           text-align: center;
+       }
+
+       th
+       {
+           background-color: red;
+       }
+
+       a
+       {
+           color: lightblue;
+           text-decoration: none;
+       }
+
+       a:hover
+       {
+           text-decoration: underline;
+       }
+    </style>
+    <title>콘텐츠 검색 결과</title>
+</head>
+<body>
+<header th:replace="~{header :: header}"></header>
+
+<h1>콘텐츠 검색</h1>
+
+<form action="/searchResult" method="get">
+    <input type="text" name="query" placeholder="이름을 입력하세요" />
+
+    <select name="genre">
+        <option value="">장르 선택</option>
+        <option th:each="g : ${genres}" th:value="${g}" th:text="${g}"></option>
+    </select>
+
+    <button type="submit">검색</button>
+</form>
+
+<h2>검색 결과</h2>
+
+<p th:if="${message != null}" th:text="${message}" style="color: yellow; font-weight: bold;"></p>
+
+<table th:if="${contents != null and !contents.isEmpty()}">
+    <thead>
+    <tr>
+        <th>이름</th>
+        <th>장르</th>
+        <th>에피소드 수</th>
+        <th>상세보기</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="content : ${contents}">
+        <td th:text="${content.name}"></td>
+        <td th:text="${content.contentGenre}"></td>
+        <td th:text="${content.epCount}"></td>
+        <td>
+            <a th:href="@{/content/{idx}(idx=${content.idx})}">상세보기</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

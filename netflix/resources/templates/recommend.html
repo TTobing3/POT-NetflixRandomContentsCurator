@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Netflix Content</title>
+    <style>
+        body
+        {
+            background-color : black;
+            color : white;
+            margin : 0;
+        }
+
+        header
+        {
+            background-color : red;
+            text-align : center;
+            font-weight : bold;
+
+            padding : 0;
+
+            display : flex;
+            justify-content : space-around;
+            align-items : flex-start;
+        }
+
+        header div p
+        {
+            margin : 0;
+            font-size : 36px;
+        }
+
+        main
+        {
+            text-align : center;
+            display : flex;
+            justify-content : space-around;
+            align-items : flex-start;
+        }
+
+        .content-item
+        {
+            width : 30%;
+        }
+
+        main img
+        {
+            width : 100%;
+            max-width : 20px;
+            height : auto;
+            border-radius : 5px;
+        }
+
+        footer
+        {
+            margin-top : 36px;
+            text-align : center;
+        }
+
+        a
+        {
+            text-decoration : none;
+        }
+
+        a span {
+            background-color : red;
+            color : white;
+            padding : 8px;
+            border-radius : 5px;
+            font-weight : bold;
+            text-decoration : none;
+        }
+    </style>
+</head>
+<body>
+<header th:replace="~{header :: header}"></header>
+<main>
+        <div class="content-item" th:each="content : ${contents}">
+
+            <h2 th:text="${content.name}"/>
+
+            <a th:href="@{/choice/{idx}(idx=${content.idx})}">
+                <img th:src="${content.image}" alt="content image" />
+            </a>
+            <br>
+
+            <h4 th:text="${content.contentGenre}"/>
+
+            <span th:text="${content.reviews[0].point}"/>/5
+            <p th:if="${content.reviews != null and content.reviews.size() > 0}">
+                <span th:text="${content.reviews[0].review}"/>
+            </p>
+            <p th:if="${content.reviews == null or content.reviews.size() == 0}">
+                리뷰 없음
+            </p>
+            <br>
+
+            <a th:href="@{/choice/{idx}(idx=${content.idx})}">
+                <span>선택</span>
+            </a>
+            <br>
+
+        </div>
+</main>
+<footer>
+    <a th:href="@{/roll}">
+        <span>바꾸기</span>
+    </a>
+</footer>
+<br>
+<br>
+</body>
+</html>

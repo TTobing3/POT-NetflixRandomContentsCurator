@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Netflix Content Detail</title>
+
+
+    <style>
+
+        body
+        {
+            background-color : black;
+            color : white;
+            margin : 0;
+        }
+
+        header
+        {
+            background-color : red;
+            text-align : center;
+            font-weight : bold;
+
+            height : 10%;
+            padding : 0;
+
+            display : flex;
+            justify-content : space-around;
+            align-items : flex-start;
+        }
+
+        header div p
+        {
+            margin : 0;
+            font-size : 36px;
+        }
+
+        a
+        {
+            text-decoration : none;
+        }
+
+        a span
+        {
+            background-color : red;
+            color : white;
+            padding : 8px;
+            border-radius : 5px;
+            font-weight : bold;
+            text-decoration : none;
+        }
+
+        .icon
+        {
+            width : auto;
+            height : 24px;
+            margin : 0;
+        }
+
+        main
+        {
+            display: flex;
+            width : 100%;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        main img
+        {
+            width : 300px;
+            height : auto;
+            border-radius : 5px;
+        }
+
+        main p
+        {
+            font-size : 48px;
+            font-weight : bold;
+            margin : 0;
+        }
+
+        .review
+        {
+            width: 100%;
+            max-width : 800px;
+        }
+
+        .review p
+        {
+            font-size : 18px;
+        }
+
+        input
+        {
+            width : 100%;
+            height : 5em;
+
+            text-align : left;
+        }
+
+
+        select
+        {
+            font-size : 16px;
+
+            width : 50px;
+            height : 28px;
+        }
+
+        button
+        {
+            font-size : 16px;
+
+            width : 100px;
+            height : 32px;
+
+            border : none;
+            background-color : red;
+            color : white;
+            border-radius : 5px;
+            text-weight : bold;
+
+            margin-top : 5px;
+        }
+
+
+    </style>
+
+</head>
+<body>
+
+<header th:replace="~{header :: header}"></header>
+
+<main>
+    <br>
+    <img src="/img/Touch.png" alt="touch" class="icon">
+    <th:block th:text="${content.choice}"/>회 선택!
+    <br>
+    <br>
+
+    <img th:src="${content.image}" alt="content image" />
+    <p th:text="${content.name}"/>
+    <div>
+        [ <span th:text="${content.contentGenre}"/> / <span rows="5" cols="40" th:text="${content.epCount}"/> 부작 ]
+    </div>
+
+    <br>
+
+    <div class="review">
+        <hr>
+
+        <h2>새 리뷰 추가</h2>
+
+        <form th:action="@{/content/{idx}/addReview(idx=${content.idx})}" method="post">
+            <input type="text" name="review" placeholder="리뷰 내용 입력" />
+
+            <br>
+
+            <div>
+                <select name="point" id="point">
+                    <option value="5">5점</option>
+                    <option value="4">4점</option>
+                    <option value="3">3점</option>
+                    <option value="2">2점</option>
+                    <option value="1">1점</option>
+                </select>
+                <button type="submit">리뷰 추가</button>
+            </div>
+        </form>
+
+        <br>
+
+        <hr>
+
+        <div th:each="review : ${content.reviews}" class="review">
+            <p th:text="'리뷰 내용: ' + ${review.review}"></p>
+            평점 :
+            <span th:each="count : ${#numbers.sequence(1, review.point)}" class="review">★</span>
+
+            <form th:action="@{/deleteReview/{idx}/{reviewId}(idx=${content.idx}, reviewId=${review.id})}" method="post">
+                <button type="submit">삭제</button>
+            </form>
+
+            <hr>
+        </div>
+
+    </div>
+</main>
+
+
+</body>
+</html>

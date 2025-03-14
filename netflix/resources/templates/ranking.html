@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Netflix Ranking</title>
+    <style>
+
+        body
+        {
+            background-color : black;
+            color : white;
+            margin : 0;
+        }
+
+        header
+        {
+            background-color : red;
+            text-align : center;
+            font-weight : bold;
+
+            height : 10%;
+            padding : 0;
+
+            display : flex;
+            justify-content : space-around;
+            align-items : flex-start;
+        }
+
+        header div p
+        {
+            margin : 0;
+            font-size : 36px;
+        }
+
+        main
+        {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        main div
+        {
+            margin : 10px;
+            text-align : center;
+        }
+
+        main img
+        {
+            width : 30%;
+            height : auto;
+            border-radius : 5px;
+        }
+
+        .icon
+        {
+            width : auto;
+            height : 24px;
+            margin : 0;
+        }
+
+        a
+        {
+            text-decoration : none;
+        }
+
+        a span {
+            background-color : red;
+            color : white;
+            padding : 8px;
+            border-radius : 5px;
+            font-weight : bold;
+            text-decoration : none;
+        }
+
+        select
+        {
+            text-align : center;
+            font-size : 16px;
+
+            width : 300px;
+            height : 50px;
+        }
+
+    </style>
+</head>
+<body>
+
+<header th:replace="~{header :: header}"></header>
+
+<main>
+    <div th:each="content, status : ${contents}">
+        <h1 th:text="${status.count}"/>
+        <img src="/img/Touch.png" alt="touch" class="icon">
+        <th:block th:text="${content.choice}"/>회
+
+        <br><br>
+
+        <a th:href="@{/content/{idx}(idx=${content.idx})}">
+        <img th:src="${content.image}" alt="content image"/>
+        <br><br><br>
+            <span th:text="${content.name}"/>
+        </a>
+
+        <br><br><br>
+        <hr>
+    </div>
+</main>
+
+</body>
+</html>
